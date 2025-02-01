@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import { LatestPost } from "~/app/_components/post";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import MapWrapper from "./components/MapWrapper";
+import Provider from "./components/provider";
 
 export default async function Home() {
   const session = await auth();
@@ -15,15 +15,14 @@ export default async function Home() {
   return (
     <HydrateClient>
       <main className="">
-        <MapWrapper />
+        <Provider>
+          <MapWrapper />
+        </Provider>
         <Link
           href={session ? "/api/auth/signout" : "/api/auth/signin"}
-          className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
         >
           {session ? "Sign out" : "Sign in"}
         </Link>
-
-        {session?.user && <LatestPost />}
       </main>
     </HydrateClient>
   );
