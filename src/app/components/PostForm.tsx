@@ -2,6 +2,7 @@
 
 import { LngLat } from "mapbox-gl";
 import { useState } from "react";
+import { postCreateSchema } from "~/shared/schemas";
 
 import { api } from "~/trpc/react";
 
@@ -20,12 +21,15 @@ export function PostForm({ lnglat }: { lnglat: LngLat | null }) {
     <div className="w-full max-w-xs">
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          if(!lnglat) {
-            alert("Please select a location on the map");
-            return;
+          try {
+            e.preventDefault();
+            const result = postCreateSchema.parse({ name, latitude: lnglat?.lat, longitude: lnglat?.lng });
+            createPost.mutate(result);
+          } catch (err) {
+            if (err instanceof Error) {
+              alert('エラーがあります');
+            }
           }
-          createPost.mutate({ name, latitude: lnglat.lat, longitude: lnglat.lng });
         }}
         className="flex flex-col gap-2"
       >
