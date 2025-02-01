@@ -2,15 +2,15 @@ import { Marker } from "react-map-gl";
 import { FaCoffee } from "react-icons/fa"; // コーヒーカップアイコン
 
 interface MapBoxMarkerProps {
-  id: string;
+  id: number;
   latitude: number;
   longitude: number;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const MapBoxMarker = ({ id, latitude, longitude, onClick }: MapBoxMarkerProps) => {
   return (
-    <Marker key={id} latitude={latitude} longitude={longitude} onClick={() => onClick()}>
+    <Marker key={id} latitude={latitude} longitude={longitude} onClick={() => onClick && onClick()}>
       <div
         className="cursor-pointer"
         onClick={onClick}

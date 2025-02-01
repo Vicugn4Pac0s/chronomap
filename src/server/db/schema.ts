@@ -20,7 +20,12 @@ export const posts = createTable(
   "post",
   {
     id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+    userId: text("user_id", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     name: text("name", { length: 256 }),
+    latitude: int("latitude").notNull(),
+    longitude: int("longitude").notNull(),
     createdById: text("created_by", { length: 255 })
       .notNull()
       .references(() => users.id),
