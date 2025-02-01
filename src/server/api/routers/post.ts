@@ -14,6 +14,18 @@ export const postRouter = createTRPCRouter({
     });
   }),
 
+  getRecentPosts: publicProcedure
+    .input(z.object({ minutes: z.number().default(60) }))  // デフォルトは60分以内
+    .query(async ({ ctx, input }) => {
+      const minutesAgo = new Date(Date.now() - input.minutes * 60 * 1000);
+
+      return await ctx.db.query.posts.findMany({
+        where: (posts, { gt }) => gt(posts.createdAt, minutesAgo),
+        with: { user: true },
+        orderBy: (posts, { desc }) => [desc(posts.createdAt)],
+      });
+    }),
+
   create: protectedProcedure
     .input(postCreateSchema)
     .mutation(async ({ ctx, input }) => {
