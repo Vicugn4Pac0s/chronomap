@@ -30,6 +30,7 @@ const MapWrapper = () => {
             {Post.map((post) => (
               <MapBoxMarker
                 id={post.id}
+                image={post.user.image}
                 latitude={post.latitude}
                 longitude={post.longitude}
             />

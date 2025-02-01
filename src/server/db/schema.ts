@@ -42,6 +42,13 @@ export const posts = createTable(
   })
 );
 
+export const postsRelations = relations(posts, ({ one }) => ({
+  user: one(users, {
+    fields: [posts.userId],
+    references: [users.id],
+  }),
+}));
+
 export const users = createTable("user", {
   id: text("id", { length: 255 })
     .notNull()

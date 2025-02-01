@@ -9,7 +9,9 @@ import { postCreateSchema } from "~/shared/schemas";
 
 export const postRouter = createTRPCRouter({
   get: publicProcedure.query(async ({ ctx }) => {
-    return await ctx.db.query.posts.findMany();
+    return await ctx.db.query.posts.findMany({
+      with: {user: true},
+    });
   }),
 
   create: protectedProcedure
