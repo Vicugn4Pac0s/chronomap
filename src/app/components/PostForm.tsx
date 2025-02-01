@@ -1,10 +1,11 @@
 "use client";
 
+import { LngLat } from "mapbox-gl";
 import { useState } from "react";
 
 import { api } from "~/trpc/react";
 
-export function PostForm() {
+export function PostForm({ lnglat }: { lnglat: LngLat | null }) {
 
   const utils = api.useUtils();
   const [name, setName] = useState("");
@@ -20,7 +21,11 @@ export function PostForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createPost.mutate({ name, latitude: 35.6895, longitude: 139.6917 });
+          if(!lnglat) {
+            alert("Please select a location on the map");
+            return;
+          }
+          createPost.mutate({ name, latitude: lnglat.lat, longitude: lnglat.lng });
         }}
         className="flex flex-col gap-2"
       >
