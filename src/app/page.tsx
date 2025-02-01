@@ -6,11 +6,10 @@ import { api, HydrateClient } from "~/trpc/server";
 import MapWrapper from "./components/MapWrapper";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
   const session = await auth();
 
   if (session?.user) {
-    void api.post.getLatest.prefetch();
+    void api.post.get.prefetch();
   }
 
   return (

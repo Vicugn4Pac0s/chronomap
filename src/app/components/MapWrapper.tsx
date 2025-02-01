@@ -5,7 +5,7 @@ import MapBox from "./MapBox";
 import MapBoxMarker from "./MapBoxMarker";
 
 const MapWrapper = () => {
-  const [latestPost] = api.post.getLatest.useSuspenseQuery();
+  const [Post] = api.post.get.useSuspenseQuery();
     
   return (
     <div className="relative h-[50vh]">
@@ -17,13 +17,13 @@ const MapWrapper = () => {
           pitch: 0,
           padding: { top: 0, bottom: 0, left: 0, right: 0 },
         }}>
-        {latestPost && (
-          <MapBoxMarker
-            id={latestPost.id}
-            latitude={latestPost.latitude}
-            longitude={latestPost.longitude}
+          {Post.map((post) => (
+            <MapBoxMarker
+              id={post.id}
+              latitude={post.latitude}
+              longitude={post.longitude}
           />
-        )}
+          ))}
       </MapBox>
     </div>
   );
