@@ -26,7 +26,7 @@ const PostForm = ({onComplete}: PostFormProps) => {
   });
 
   return (
-    <div className="w-full max-w-xs">
+    <div className="w-full max-w-xs mx-auto">
       <form
         onSubmit={(e) => {
           try {

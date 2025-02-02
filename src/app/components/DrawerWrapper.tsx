@@ -25,8 +25,8 @@ const DrawerWrapper = ({ open, setOpen, children }: DrawerWrapperProps) => {
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
-          {children}
         <DrawerFooter>
+          {children}
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
