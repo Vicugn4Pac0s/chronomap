@@ -11,7 +11,7 @@ interface MapBoxMarkerProps {
 
 const MapBoxMarker = ({ id, image, latitude, longitude, onClick }: MapBoxMarkerProps) => {
   return (
-    <Marker key={id} latitude={latitude} longitude={longitude} onClick={() => onClick && onClick()}>
+    <Marker key={id} latitude={latitude} longitude={longitude} onClick={() => onClick?.()}>
       <div
         className="cursor-pointer"
         onClick={onClick}
