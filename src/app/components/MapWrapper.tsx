@@ -9,6 +9,7 @@ import DrawerWrapper from "./DrawerWrapper";
 import PostForm from "./PostForm";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 const MapWrapper = () => {
   const { data: session } = useSession();
@@ -17,7 +18,24 @@ const MapWrapper = () => {
   
   return (
     <MapProvider>
-      <div className="relative h-[50vh]">
+      <div className="relative h-[100vh]">
+        {session?.user && (
+          <>
+            <div className="absolute top-0 right-0 p-2 z-50 w-full">
+              <div className="flex justify-between align-middle">
+                <Avatar>
+                  <AvatarImage src={session.user.image || ''} />
+                </Avatar>
+                <Button onClick={()=>{setOpen(true)}}>POST</Button>
+              </div>
+            </div>
+            <DrawerWrapper open={open} setOpen={setOpen}>
+              <PostForm onComplete={()=>{
+                setOpen(false);
+              }} />
+            </DrawerWrapper>
+          </>
+        )}
         <MapBox
           options={{
             latitude: 35.6895,
@@ -38,16 +56,6 @@ const MapWrapper = () => {
             ))}
         </MapBox>
       </div>
-      {session?.user && (
-        <>
-          <Button onClick={()=>{setOpen(true)}}>登録</Button>
-          <DrawerWrapper open={open} setOpen={setOpen}>
-            <PostForm onComplete={()=>{
-              setOpen(false);
-            }} />
-          </DrawerWrapper>
-        </>
-      )}
     </MapProvider>
   );
 }
