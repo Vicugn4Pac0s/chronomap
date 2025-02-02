@@ -8,6 +8,7 @@ import MapBoxMarker from "./MapBoxMarker";
 import DrawerWrapper from "./DrawerWrapper";
 import PostForm from "./PostForm";
 import { useState } from "react";
+import { Button } from "./ui/button";
 
 const MapWrapper = () => {
   const { data: session } = useSession();
@@ -39,9 +40,7 @@ const MapWrapper = () => {
       </div>
       {session?.user && (
         <>
-          <button onClick={()=>{
-            setOpen(true);
-          }}>登録</button>
+          <Button onClick={()=>{setOpen(true)}}>登録</Button>
           <DrawerWrapper open={open} setOpen={setOpen}>
             <PostForm onComplete={()=>{
               setOpen(false);

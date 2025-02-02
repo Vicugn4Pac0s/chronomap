@@ -5,6 +5,8 @@ import { useMap } from "react-map-gl";
 import { postCreateSchema } from "~/shared/schemas";
 
 import { api } from "~/trpc/react";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 interface PostFormProps {
   onComplete?: () => void;
@@ -40,21 +42,10 @@ const PostForm = ({onComplete}: PostFormProps) => {
         }}
         className="flex flex-col gap-2"
       >
-        <input
-          type="text"
-          placeholder="Title"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-full px-4 py-2 text-black"
-        />
-
-        <button
-          type="submit"
-          className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
-          disabled={createPost.isPending}
-        >
+        <Input type="text" value={name} placeholder="Title" onChange={(e) => setName(e.target.value)} />
+        <Button type="submit" disabled={createPost.isPending}>
           {createPost.isPending ? "Submitting..." : "Submit"}
-        </button>
+        </Button>
       </form>
     </div>
   );
