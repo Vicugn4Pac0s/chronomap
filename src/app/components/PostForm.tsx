@@ -1,19 +1,25 @@
 "use client";
 
-import { LngLat } from "mapbox-gl";
 import { useState } from "react";
+import { useMap } from "react-map-gl";
 import { postCreateSchema } from "~/shared/schemas";
 
 import { api } from "~/trpc/react";
 
-export function PostForm({ lnglat }: { lnglat: LngLat | null }) {
+interface PostFormProps {
+  onComplete?: () => void;
+}
+
+const PostForm = ({onComplete}: PostFormProps) => {
 
   const utils = api.useUtils();
+  const map = useMap();
   const [name, setName] = useState("");
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
       await utils.post.invalidate();
       setName("");
+      onComplete?.();
     },
   });
 
@@ -23,6 +29,7 @@ export function PostForm({ lnglat }: { lnglat: LngLat | null }) {
         onSubmit={(e) => {
           try {
             e.preventDefault();
+            const lnglat = map.default?.getCenter();
             const result = postCreateSchema.parse({ name, latitude: lnglat?.lat, longitude: lnglat?.lng });
             createPost.mutate(result);
           } catch (err) {
@@ -52,3 +59,5 @@ export function PostForm({ lnglat }: { lnglat: LngLat | null }) {
     </div>
   );
 }
+
+export default PostForm;
