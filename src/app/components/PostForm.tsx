@@ -33,7 +33,7 @@ const PostForm = ({onComplete}: PostFormProps) => {
           try {
             e.preventDefault();
             const lnglat = map.default?.getCenter();
-            const result = postCreateSchema.parse({ name, latitude: lnglat?.lat, longitude: lnglat?.lng });
+            const result = postCreateSchema.parse({ name: form.name, latitude: lnglat?.lat, longitude: lnglat?.lng });
             createPost.mutate(result);
           } catch (err) {
             if (err instanceof Error) {
