@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
+import { useEffect } from 'react';
+import useTimeStore from '../stores/timeStore';
 
 interface ClockProps {
   className?: string;
 }
 
 const Clock: React.FC<ClockProps> = ({ className }) => {
-  const [time, setTime] = useState(dayjs());
+  const { time, updateTime } = useTimeStore();
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      setTime(dayjs());
+      updateTime();
     }, 1000);
 
     return () => clearInterval(timerId);
@@ -18,7 +18,7 @@ const Clock: React.FC<ClockProps> = ({ className }) => {
 
   return (
     <div className={`text-white text-4xl font-mono ${className}`}>
-      {time.format('YYYY/MM/DD HH:mm:ss')}
+      {time}
     </div>
   );
 };

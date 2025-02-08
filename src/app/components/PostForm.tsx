@@ -7,7 +7,7 @@ import { postCreateSchema } from "~/shared/schemas";
 import { api } from "~/trpc/react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useFormStore } from "../store/useFormStore";
+import { useFormStore } from "../stores/formStore";
 
 interface PostFormProps {
   onComplete?: () => void;
