@@ -15,6 +15,7 @@ import { useMapStore } from "../store/useMapStore";
 import MapBoxBalloonMarker from "./MapBoxBalloonMarker";
 import useGeolocation from "../hooks/useGeolocation";
 import { LngLat } from "mapbox-gl";
+import Clock from "./Clock";
 
 const MapWrapper = () => {
   const map = useMap();
@@ -60,6 +61,7 @@ const MapWrapper = () => {
           </DrawerWrapper>
         </>
       )}
+      <Clock className="absolute top-2 left-1/2 transform -translate-x-1/2 z-10" />
       <MapBox
         options={{
           latitude: 35.6895,
