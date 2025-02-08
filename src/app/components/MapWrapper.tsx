@@ -25,7 +25,7 @@ const MapWrapper = () => {
     if (position) {
       map.default?.flyTo({
         center: new LngLat(position.coords.longitude, position.coords.latitude),
-        zoom: 11,
+        zoom: 16,
       });
     }
   }, [position]);
@@ -42,7 +42,7 @@ const MapWrapper = () => {
       options={{
         latitude: 35.6895,
         longitude: 139.6917,
-        zoom: 11,
+        zoom: 16,
         bearing: 0,
         pitch: 0,
         padding: { top: 0, bottom: 0, left: 0, right: 0 },
@@ -57,12 +57,14 @@ const MapWrapper = () => {
           />
         )}
         {Post.map((post) => (
-          <MapBoxMarker
-            id={post.id}
-            image={post.user.image}
-            latitude={post.latitude}
-            longitude={post.longitude}
-        />
+          post.name && (
+            <MapBoxBalloonMarker
+              id={post.id}
+              text={post.name}
+              latitude={post.latitude}
+              longitude={post.longitude}
+            />
+          )
         ))}
     </MapBox>
   );

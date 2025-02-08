@@ -21,8 +21,8 @@ export default function MapBox({ options, children }: MapBoxProps) {
         onMove={(e) => setViewport(e.viewState)}
         mapboxAccessToken={MAPBOX_TOKEN}
         mapStyle="mapbox://styles/mapbox/streets-v11"
-        maxZoom={10}
-        minZoom={7}
+        maxZoom={18}
+        minZoom={6}
       >
         {children}
       </Map>
