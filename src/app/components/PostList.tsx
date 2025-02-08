@@ -1,11 +1,11 @@
-import React from 'react';
 import { api } from "~/trpc/react";
+import PostItem from "./PostItem";
 
 interface PostListProps {
   className?: string;
 }
 
-const PostList: React.FC<PostListProps> = ({ className }) => {
+const PostList = ({ className }: PostListProps) => {
   const [Post] = api.post.get.useSuspenseQuery();
 
   return (
@@ -13,7 +13,7 @@ const PostList: React.FC<PostListProps> = ({ className }) => {
       <ul>
         {Post.map(post => (
           <li key={post.id} className='border-b py-2'>
-            {post.name}
+            <PostItem post={post}  />
           </li>
         ))}
       </ul>

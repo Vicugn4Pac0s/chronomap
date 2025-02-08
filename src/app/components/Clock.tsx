@@ -5,7 +5,7 @@ interface ClockProps {
   className?: string;
 }
 
-const Clock: React.FC<ClockProps> = ({ className }) => {
+const Clock = ({ className }: ClockProps) => {
   const { time, updateTime } = useTimeStore();
 
   useEffect(() => {
