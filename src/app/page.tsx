@@ -1,7 +1,7 @@
 
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
-import MapWrapper from "./components/MapWrapper";
+import Body from "./components/Body";
 import Provider from "./provider";
 import { Button } from "./components/ui/button";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default async function Home() {
     <HydrateClient>
       <main className="">
         <Provider>
-          <MapWrapper />
+          <Body />
         </Provider>
         <Link
           href={session ? "/api/auth/signout" : "/api/auth/signin"}
