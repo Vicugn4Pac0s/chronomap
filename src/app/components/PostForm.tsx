@@ -7,6 +7,7 @@ import { postCreateSchema } from "~/shared/schemas";
 import { api } from "~/trpc/react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useDrawerStore } from "../stores/drawerStore";
 import { useFormStore } from "../stores/formStore";
 
 interface PostFormProps {
@@ -17,11 +18,13 @@ const PostForm = ({onComplete}: PostFormProps) => {
 
   const utils = api.useUtils();
   const map = useMap();
+  const close = useDrawerStore(state => state.close);
   const {form, setForm,　resetForm} = useFormStore()
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
       await utils.post.invalidate();
       resetForm();
+      close();
       onComplete?.();
     },
   });

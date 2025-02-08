@@ -16,15 +16,17 @@ import MapBoxBalloonMarker from "./MapBoxBalloonMarker";
 import useGeolocation from "../hooks/useGeolocation";
 import { LngLat } from "mapbox-gl";
 import Clock from "./Clock";
+import { useDrawerStore } from "../stores/drawerStore";
+
 
 const MapWrapper = () => {
   const map = useMap();
   const { data: session } = useSession();
   const [Post] = api.post.get.useSuspenseQuery();
-  const [open, setOpen] = useState(false);
-  const { selectedLatLng, setSelectedLatLng } = useMapStore();
-  const form = useFormStore(state=>state.form);
   const { position } = useGeolocation();
+  const { isOpen, open, close } = useDrawerStore();
+  const form = useFormStore(state=>state.form);
+  const { selectedLatLng, setSelectedLatLng } = useMapStore();
 
   useEffect(() => {
     if (position) {
@@ -36,11 +38,11 @@ const MapWrapper = () => {
   }, [position]);
 
   useEffect(() => {
-    if (open) {
+    if (isOpen) {
       const lngLat = map.default?.getCenter();
       if (lngLat) setSelectedLatLng(lngLat);
     }
-  }, [open]);
+  }, [isOpen]);
 
   return (
     <div className="relative h-[100vh]">
@@ -51,13 +53,11 @@ const MapWrapper = () => {
               <Avatar>
                 <AvatarImage src={session.user.image || ''} />
               </Avatar>
-              <Button onClick={()=>{setOpen(true)}}>POST</Button>
+              <Button onClick={()=>{open()}}>POST</Button>
             </div>
           </div>
-          <DrawerWrapper open={open} setOpen={setOpen}>
-            <PostForm onComplete={()=>{
-              setOpen(false);
-            }} />
+          <DrawerWrapper>
+            <PostForm />
           </DrawerWrapper>
         </>
       )}
@@ -72,7 +72,7 @@ const MapWrapper = () => {
           padding: { top: 0, bottom: 0, left: 0, right: 0 },
         }}
         >
-          {(open && selectedLatLng) && (
+          {(isOpen && selectedLatLng) && (
             <MapBoxBalloonMarker
               id={-9999}
               text={form.name}

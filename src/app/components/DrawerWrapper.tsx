@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -9,17 +9,18 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "~/app/components/ui/drawer"
+import { useDrawerStore } from "../stores/drawerStore";
 
 interface DrawerWrapperProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
   children: ReactNode;
 }
 
-const DrawerWrapper = ({ open, setOpen, children }: DrawerWrapperProps) => {
+const DrawerWrapper = ({ children }: DrawerWrapperProps) => {
+  const isOpen = useDrawerStore(state => state.isOpen);
+  const close = useDrawerStore(state => state.close);
 
   return (
-    <Drawer open={open} onClose={() => setOpen(false)}>
+    <Drawer open={isOpen} onClose={() => close()}>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
