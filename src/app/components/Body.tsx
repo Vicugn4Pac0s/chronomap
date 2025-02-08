@@ -8,6 +8,7 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import Clock from "./Clock";
 import { useDrawerStore } from "../stores/drawerStore";
 import MapWrapper from "./MapWrapper";
+import PostList from "./PostList";
 
 const Body = () => {
   const { data: session } = useSession();
@@ -25,6 +26,7 @@ const Body = () => {
               <Button onClick={()=>{open()}}>POST</Button>
             </div>
           </div>
+          <PostList className="absolute bottom-0 left-0 h-1/3 z-10" />
           <DrawerWrapper>
             <PostForm />
           </DrawerWrapper>
