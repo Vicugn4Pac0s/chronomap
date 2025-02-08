@@ -59,10 +59,17 @@ const MapWrapper = () => {
         {Post.map((post) => (
           post.name && (
             <MapBoxBalloonMarker
+              key={post.id}
               id={post.id}
               text={post.name}
               latitude={post.latitude}
               longitude={post.longitude}
+              onClick={() => {
+                map.default?.flyTo({
+                  center: new LngLat(post.longitude, post.latitude),
+                  zoom: 17,
+                });
+              }}
             />
           )
         ))}
