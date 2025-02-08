@@ -13,6 +13,8 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import { useFormStore } from "../store/useFormStore";
 import { useMapStore } from "../store/useMapStore";
 import MapBoxBalloonMarker from "./MapBoxBalloonMarker";
+import useGeolocation from "../hooks/useGeolocation";
+import { LngLat } from "mapbox-gl";
 
 const MapWrapper = () => {
   const map = useMap();
@@ -21,6 +23,16 @@ const MapWrapper = () => {
   const [open, setOpen] = useState(false);
   const { selectedLatLng, setSelectedLatLng } = useMapStore();
   const form = useFormStore(state=>state.form);
+  const { position } = useGeolocation();
+
+  useEffect(() => {
+    if (position) {
+      map.default?.flyTo({
+        center: new LngLat(position.coords.longitude, position.coords.latitude),
+        zoom: 11,
+      });
+    }
+  }, [position]);
 
   useEffect(() => {
     if (open) {
