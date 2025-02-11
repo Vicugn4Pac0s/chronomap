@@ -20,7 +20,7 @@ const Body = () => {
   return (
     <div className="relative h-[100vh]">
         <>
-          <div className="absolute top-0 right-0 p-2 z-50 w-full">
+          <div className="bg-green-900 bg-opacity-75 absolute top-0 right-0 p-4 z-50 w-full">
             <div className="flex justify-between align-middle">
               {session?.user ? (
                 <div className="flex items-center gap-2">
@@ -32,18 +32,22 @@ const Body = () => {
               ): (
                 <Button onClick={()=>{ signIn('google'); }}>Sign in</Button>
               )}
+              <Clock />
               <div className="flex items-center gap-2">
                 {session?.user && <Switch checked={isPostMode} onCheckedChange={(checked)=>{ setIsPostMode(checked) }} />}
                 <Button variant={'secondary'} onClick={()=>{open()}}>{ isPostMode ? 'POST': 'List' }</Button>
               </div>
             </div>
           </div>
-          {!isPostMode && <PostList className="absolute bottom-0 left-0 h-1/3 z-10" />}
           <DrawerWrapper>
-            <PostForm />
+            {isPostMode ? (
+              <PostForm />
+            ): (
+              <PostList className="h-1/2" />
+            ) }
+            
           </DrawerWrapper>
         </>
-      <Clock className="absolute top-2 left-1/2 transform -translate-x-1/2 z-10" />
       <MapWrapper />
     </div>
   );
