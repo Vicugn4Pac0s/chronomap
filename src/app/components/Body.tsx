@@ -9,10 +9,13 @@ import Clock from "./Clock";
 import { useDrawerStore } from "../stores/drawerStore";
 import MapWrapper from "./MapWrapper";
 import PostList from "./PostList";
+import { Switch } from "./ui/switch";
+import { useState } from "react";
 
 const Body = () => {
   const { data: session } = useSession();
   const open = useDrawerStore(state => state.open);
+  const [isPostMode, setIsPostMode] = useState(false);
 
   return (
     <div className="relative h-[100vh]">
@@ -23,10 +26,13 @@ const Body = () => {
               <Avatar>
                 <AvatarImage src={session.user.image || ''} />
               </Avatar>
-              <Button onClick={()=>{open()}}>POST</Button>
+              <div className="flex items-center gap-2">
+                <Switch checked={isPostMode} onCheckedChange={(checked)=>{ setIsPostMode(checked) }} />
+                <Button onClick={()=>{open()}}>{ isPostMode ? 'POST': 'List' }</Button>
+              </div>
             </div>
           </div>
-          <PostList className="absolute bottom-0 left-0 h-1/3 z-10" />
+          {!isPostMode && <PostList className="absolute bottom-0 left-0 h-1/3 z-10" />}
           <DrawerWrapper>
             <PostForm />
           </DrawerWrapper>
