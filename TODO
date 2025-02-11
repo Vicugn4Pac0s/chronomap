@@ -3,6 +3,7 @@ Todo:
   - プログラムの方向性の確定 @important
     SNS or tool?
   - activePostをStoreに追加する
+  - マップの初期値設定のアニメーションをなくす
     
   スタイル:
     - mapboxのスタイルを変更 @30min
