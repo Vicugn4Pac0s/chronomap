@@ -6,6 +6,7 @@ import {
 import { protectedProcedure, publicProcedure } from "../procedure";
 import { posts } from "~/server/db/schema";
 import { postCreateSchema } from "~/shared/schemas";
+import { eq } from "drizzle-orm";
 
 export const postRouter = createTRPCRouter({
   get: publicProcedure.query(async ({ ctx }) => {
@@ -36,6 +37,12 @@ export const postRouter = createTRPCRouter({
         longitude: input.longitude,
         createdById: ctx.session.user.id,
       });
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.delete(posts).where( eq(posts.name, input.id) );
     }),
 
 });
