@@ -52,6 +52,7 @@ const MapWrapper = () => {
           <MapBoxBalloonMarker
             id={-9999}
             text={form.name}
+            image={''}
             latitude={selectedLatLng.lat}
             longitude={selectedLatLng.lng}
           />
@@ -62,6 +63,7 @@ const MapWrapper = () => {
               key={post.id}
               id={post.id}
               text={post.name}
+              image={post.user.image || ''}
               latitude={post.latitude}
               longitude={post.longitude}
               onClick={() => {
